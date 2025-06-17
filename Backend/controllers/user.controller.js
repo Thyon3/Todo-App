@@ -14,6 +14,7 @@ exports.register = async (req, res, next) => {
       status: true,
       success: "the user has been registered succesfully",
     });
+    console.log("the user has registerd");
   } catch (e) {
     throw e;
   }
