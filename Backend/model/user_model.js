@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 });
+
 userSchema.pre("save", async function () {
   try {
     const user = this;
@@ -25,6 +26,15 @@ userSchema.pre("save", async function () {
     throw e;
   }
 });
+
+userSchema.methods.comparePassword = async function (userPassword) {
+  try {
+    const isValid = await bcrpt.compare(userPassword, this.password);
+    return isValid;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const UserModel = db.model("user", userSchema);
 module.exports = UserModel;

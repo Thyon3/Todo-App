@@ -1,3 +1,4 @@
+const UserModel = require("../model/user_model");
 const userService = require("../sevices/user.service");
 
 exports.register = async (req, res, next) => {
@@ -15,6 +16,34 @@ exports.register = async (req, res, next) => {
       success: "the user has been registered succesfully",
     });
     console.log("the user has registerd");
+  } catch (e) {
+    throw e;
+  }
+};
+
+exports.login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await userService.checkUser(email);
+
+    if (!user) {
+      throw new Error("the User does not exist please Sign up first");
+    }
+    // if the user exits then check the wherher the password is correct
+
+    const isPasswordCorrect = await user.comparePassword(password);
+
+    if (isPasswordCorrect) {
+      let tokenData = { id: user._id, email: user.email };
+      // now lets generate the token we need to login the user
+
+      let token = userService.generateToken(tokenData, "secreteKey", "1hr");
+      // send a response for the user
+      res.status(200).json({ status: true, token: token });
+    } else {
+      throw new Error("Invalid Password");
+    }
   } catch (e) {
     throw e;
   }
