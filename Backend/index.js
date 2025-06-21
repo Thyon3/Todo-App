@@ -6,6 +6,9 @@ const userModel = require("./model/user_model.js");
 const bodyParser = require("body-parser");
 const routers = require("./routers/user.router.js");
 
+//
+const todoModel = require("./model/todoList.model.js");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
