@@ -1,5 +1,7 @@
-const UserModel = require("../model/user_model");
-const userService = require("../sevices/user.service");
+const UserModel = require("../model/user_model.js");
+const userService = require("../sevices/user.service.js");
+
+console.log("generateToken exists?", userService.generateToken);
 
 exports.register = async (req, res, next) => {
   try {
@@ -10,10 +12,14 @@ exports.register = async (req, res, next) => {
         error: "Email and password are required",
       });
     }
-    const successResponse = await userService.userRegister(email, password);
+    const newUser = await userService.userRegister(email, password);
+    var tokenData = { id: newUser._id, email: newUser.email };
+
+    var token = await userService.generateToken(tokenData, "secreteKey", "1h");
     res.status(201).json({
       status: true,
-      success: "the user has been registered succesfully",
+      token: token,
+      message: "the user has been registered succesfully",
     });
     console.log("the user has registerd");
   } catch (e) {
@@ -35,10 +41,14 @@ exports.login = async (req, res, next) => {
     const isPasswordCorrect = await user.comparePassword(password);
 
     if (isPasswordCorrect) {
-      let tokenData = { id: user._id, email: user.email };
+      let tokenData = { _id: user._id, email: user.email };
       // now lets generate the token we need to login the user
 
-      let token = userService.generateToken(tokenData, "secreteKey", "1hr");
+      let token = await userService.generateToken(
+        tokenData,
+        "secreteKey",
+        "1h"
+      );
       // send a response for the user
       res.status(200).json({ status: true, token: token });
     } else {
