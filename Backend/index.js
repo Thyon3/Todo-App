@@ -4,8 +4,8 @@ const app = express();
 const db = require("./config/db");
 const userModel = require("./model/user_model.js");
 const bodyParser = require("body-parser");
-const routers = require("./routers/user.router.js");
-
+const userRouter = require("./routers/user.router.js");
+const todoListRouter = require("./routers/todo.router.js");
 //
 const todoModel = require("./model/todoList.model.js");
 
@@ -13,7 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
-app.use("/", routers);
+app.use("/", userRouter);
+app.use("/", todoListRouter);
 app.get("/", (req, res) => {
   res.send("Hello world hhh");
 });
