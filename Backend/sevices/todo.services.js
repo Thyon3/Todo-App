@@ -9,6 +9,10 @@ class TodoService {
     });
     return await newToDo.save();
   }
+  static async getTodoList(userId) {
+    const todo = await TodoModel.find({ userId });
+    return todo;
+  }
 }
 
 module.exports = TodoService;
