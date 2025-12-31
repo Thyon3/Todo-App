@@ -7,6 +7,9 @@ import '../providers/theme_provider.dart';
 import '../widgets/task_card.dart';
 import '../config/app_theme.dart';
 import 'add_task_screen.dart';
+import 'task_detail_screen.dart';
+import 'settings_screen.dart';
+import 'categories_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
