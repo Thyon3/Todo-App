@@ -332,7 +332,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             title: const Text('Categories'),
             onTap: () {
               Navigator.pop(context);
-              // Navigate to categories
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CategoriesScreen()),
+              );
             },
           ),
           ListTile(
