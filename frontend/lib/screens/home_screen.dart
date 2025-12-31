@@ -352,7 +352,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             title: const Text('Settings'),
             onTap: () {
               Navigator.pop(context);
-              // Navigate to settings
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
             },
           ),
           ListTile(
